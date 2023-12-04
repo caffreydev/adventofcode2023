@@ -12,17 +12,23 @@ def cardReader(card):
     for num in playersNums:
         if num in winningNums:
             wins += 1
-    return [cardNumber, wins]
+    prizes = []
+    for i in range(cardNumber + 1, cardNumber + 1 + wins):
+        prizes.append(i)
+    return [cardNumber, prizes]
 
 cards = []
+winners = {}
 
 for line in Lines:
-    cards.append(cardReader(line))
+    card = cardReader(line)
+    cards.append(card[0])
+    winners.update({card[0]: card[1]})
 
 lineMarker = 0
 
 def cardProcessor(card):
-    cards.extend( cards[card[0] + 1: card[0] + card[1] + 1])
+    cards.extend( winners[card])
 
 while lineMarker < len(cards):
     cardProcessor(cards[lineMarker])
