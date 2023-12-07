@@ -21,7 +21,7 @@ def faceCardMapper(card):
     if card == "T":
         return 10
     elif card == "J":
-        return 11
+        return 1
     elif card == "Q":
         return 12
     elif card == "K":
@@ -42,27 +42,31 @@ hands = sorted(hands, key=handSorter)
 def handCategoriser (hand):
     cards = hand[0]
     matching = {}
+    numJacks = 0
     for card in cards:
-        if not card in matching.keys():
+        if not card in matching.keys() and card != "J":
             matching.update({card: 1})
+        elif card == "J":
+            numJacks += 1
         else: matching.update({card: matching[card] + 1})
     values = matching.values()
     numPairs = 0
     for value in values:
         if value == 2:
             numPairs += 1
+
     
-    if 5 in values:
+    if 5 in values or numJacks == 5 or max(values) + numJacks == 5:
         fives.append(hand)
-    elif 4 in values:
+    elif 4 in values or max(values) + numJacks == 4:
         fours.append(hand)
-    elif 3 in values and 2 in values:
+    elif 3 in values and 2 in values or (numPairs == 2 and numJacks == 1) or (numPairs == 1 and numJacks >= 2):
         fullhouses.append(hand)
-    elif 3 in values:
+    elif 3 in values or max(values) + numJacks == 3:
         threes.append(hand)
     elif numPairs == 2:
         twoPairs.append(hand)
-    elif 2 in values:
+    elif 2 in values or numJacks == 1:
         pairs.append(hand)
     else: highCards.append(hand)
 
@@ -93,5 +97,5 @@ for four in fours:
 for five in fives:
     sum += i * five[1]
     i += 1
-    
+
 print(sum)
