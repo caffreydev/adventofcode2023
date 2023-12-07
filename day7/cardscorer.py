@@ -1,3 +1,5 @@
+import re
+
 file = open("input.txt", "r")
 Lines = file.readlines()
 
@@ -16,11 +18,30 @@ twoPairs = []
 pairs = []
 highCards = []
 
-def handSorter (hand1, hand2):
-    #to do
-    return 1
 
-# hands.sort(handSorter, True)
+def faceCardMapper(card):
+    if re.search(r'\d', card):
+        return int(card)
+    elif card == "T":
+        return 10
+    elif card == "J":
+        return 11
+    elif card == "Q":
+        return 12
+    elif card == "K":
+        return 13
+    elif card == "A": return 14
+    
+def handSorter (hand):
+    keyVal = 0
+    i = 1000
+    for card in hand[0]:
+        keyVal += faceCardMapper(card) * i
+        i -= 100
+    
+    return -1 * keyVal
+
+hands = sorted(hands, key=handSorter)
 
 def handCategoriser (hand):
     cards = hand[0]
@@ -77,4 +98,5 @@ for five in fives:
     sum += i * five[1]
     i += 1
     
+print(fours)
 print(sum)
