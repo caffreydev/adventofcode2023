@@ -24,6 +24,4 @@ while True:
     key = node[leftRight[index]]
     count += 1
 
-
 print(count)
-print(directionsLength)
