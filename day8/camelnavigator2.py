@@ -1,3 +1,5 @@
+import math
+
 file = open("input.txt", "r")
 Lines = file.readlines()
 
@@ -12,16 +14,22 @@ for i in range(1, len(Lines)):
     right = line.split(", ")[1].split(")")[0]
     nodes.update({key: {"L": left, "R": right}})
 
-key = "AAA"
-count = 0
+keys = [key for key in nodes.keys() if key[2] == "A"]
 directionsLength = len(leftRight)
 
-while True:
-    if key == "ZZZ":
-        break
-    node = nodes[key]
-    index = count % directionsLength
-    key = node[leftRight[index]]
-    count += 1
+repeatLengths = []
 
-print(count)
+for i in range(len(keys)):
+    count = 0
+    key = keys[i]
+    while True:
+        if key[2] == "Z":
+            repeatLengths.append(count)
+            break
+        node = nodes[key]
+        index = count % directionsLength
+        key = node[leftRight[index]]
+        count += 1
+
+print(math.lcm(*repeatLengths ))
+
