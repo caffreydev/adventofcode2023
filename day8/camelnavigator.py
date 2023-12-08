@@ -21,10 +21,6 @@ while True:
         break
     node = nodes[key]
     index = count % directionsLength
-    if count > directionsLength - 5 and count < directionsLength + 5:
-        print(count)
-        print(index)
-        print("---")
     key = node[leftRight[index]]
     count += 1
 
