@@ -4,6 +4,7 @@ file = open("input.txt", "r")
 Lines = file.readlines()
 
 sum = 0
+generatedValues = []
 
 def nextSequence(currSequence):
     newSequence = []
@@ -24,5 +25,6 @@ for line in Lines:
     for i in range (depth - 1, -1, -1):
         sequences[i].append(sequenceNextNum(sequences[i], sequences[i + 1]))
     sum += sequences[0][len(sequences[0]) - 1]
+    generatedValues.append(sequences[0][len(sequences[0]) - 1])
 
 print(sum)
