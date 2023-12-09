@@ -12,7 +12,7 @@ def nextSequence(currSequence):
         newSequence.append(currSequence[i + 1] - currSequence[i])
     return newSequence
 def sequenceNextNum(currSequence, prevSequence):
-    return currSequence[len(currSequence) - 1] + prevSequence[len(prevSequence) -1 ]
+    return currSequence[0] - prevSequence[0]
 
 for line in Lines:
     sequence = list(map(int ,re.findall(r'-*\d+', line)))
@@ -23,8 +23,7 @@ for line in Lines:
     depth = len(sequences) - 1
     sequences[depth].append(0)
     for i in range (depth - 1, -1, -1):
-        sequences[i].append(sequenceNextNum(sequences[i], sequences[i + 1]))
-    sum += sequences[0][len(sequences[0]) - 1]
-    generatedValues.append(sequences[0][len(sequences[0]) - 1])
+        sequences[i].insert(0, sequenceNextNum(sequences[i], sequences[i + 1]))
+    sum += sequences[0][0]
 
 print(sum)
