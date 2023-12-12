@@ -31,13 +31,6 @@ for i in range(len(galaxyMap[0])):
         emptyColumns.append(i + emptyColumnCount)
         emptyColumnCount += 1
 
-for emptyColumn in emptyColumns:
-    for j in range (len(galaxyMap)):
-        galaxyMap[j].insert(emptyColumn, '.')
-print(len(galaxyMap))
-for emptyRow in emptyRows:
-    galaxyMap.insert(emptyRow+1, galaxyMap[emptyRow])
-
 galaxies = []
 
 for i in range(len(galaxyMap)):
@@ -48,10 +41,24 @@ for i in range(len(galaxyMap)):
 sum = 0
 
 def galaxyPairSummer (galaxy1, galaxy2):
-    return abs(galaxy1[0] - galaxy2[0]) + abs(galaxy1[1] - galaxy2[1])
+    extraRows = 0
+    extraColumns = 0
+    for emptyRow in emptyRows:
+        if galaxy1[0] < emptyRow and emptyRow < galaxy2[0]:
+            extraRows += 999999
+        elif galaxy2[0] < emptyRow and emptyRow < galaxy1[0]:
+            extraRows += 999999
+    for emptyColumn in emptyColumns:
+        if galaxy1[1] < emptyColumn and emptyColumn < galaxy2[1]:
+            extraColumns += 999999
+        elif galaxy2[1] < emptyColumn and emptyColumn < galaxy1[1]:
+            extraColumns += 999999  
+    return abs(galaxy1[0] - galaxy2[0]) + abs(galaxy1[1] - galaxy2[1]) + extraRows + extraColumns
 
 for i in range(len(galaxies)):
-    for j in range(i, len(galaxies)):
+    for j in range(i + 1, len(galaxies)):
         sum += galaxyPairSummer(galaxies[i], galaxies[j])
-
+        print(sum, "   ", galaxies[i], "   ", galaxies[j])
+print(emptyColumns)
+print(emptyRows)
 print(sum)
